@@ -7,11 +7,11 @@
 
 ## Reporting
 
-1. Untuk mempersiapkan pembangunan The Wired, Lain yang berperan
+**1. Untuk mempersiapkan pembangunan The Wired, Lain yang berperan
 sebagai Router membuat tiga Switch/Gateway: Switch 1 menuju dua
 Entitas yaitu Alice dan Mika, Switch 2 menuju Chisa, sedangkan Switch 3
 menuju Knights dan Eiri. Kelima Entitas tersebut dikonfigurasi sebagai
-Client di GNS3. [GUNAKAN PREFIX IP MASING-MASING KELOMPOK]
+Client di GNS3. [GUNAKAN PREFIX IP MASING-MASING KELOMPOK]**
 
 Pada soal pertama, langkah yang dilakukan adalah membuat topologi jaringan sesuai dengan ketentuan yang telah diberikan. 
 
@@ -19,9 +19,9 @@ Pada soal pertama, langkah yang dilakukan adalah membuat topologi jaringan sesua
 
 Pada gambar topologi tersebut, ada 5 client dimana client 1 (Alice) dan client 2 (Mika) berada pada satu switch (Switch 1), lalu client 3 (Chisa) dengan switch sendiri (Switch 2), dan yang terakhir client 4 (Knights) dan client 5 (Eiri) pada satu switch (Switch 3) dimana ketiga switch ini berada pada satu router Lain.
 
-2. Karena menurut Lain pada saat itu The Wired masih terisolasi dari
+**2. Karena menurut Lain pada saat itu The Wired masih terisolasi dari
 dunia luar, konfigurasikan router Lain agar dapat tersambung langsung
-ke jaringan internet publik melalui NAT/DHCP pada interface eth0.
+ke jaringan internet publik melalui NAT/DHCP pada interface eth0.**
 
 Pada soal ke 2 ini, yang harus kita lakukan adalah melakukan IP Config pada router Lain sehingga bisa tersampung langsung ke jaringan internet publik. Dengan mengedit network configuration menjadi code berikut
 
