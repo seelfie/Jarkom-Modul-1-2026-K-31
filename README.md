@@ -694,12 +694,76 @@ file pcapng untuk nomor ini dapat diakses melalui link berikut ini: [pcapng soal
 
 - Alamat IP penyerang: 172.26.7.50 
 - Alamat IP target beserta portnya: 172.26.7.100:8080
-
-Dapat dilihat pada gambar berikut di bagian IP source, IP destination beserta info (SYN,ACK,FIN,port)
 ![ ](assets/soal_14(1).png)
 
 - Password user_lain: wired_pr0tocol_7
+![ ](assets/soal_14(2).png)
 
-Dapat dilihat pada gambar berikut, saat mengfilter http.request dan menemukan informasi password di bagian bawah (HTML Form URL)
+- Web server software dan versi yang dilaporkan pada response header: Apache/2.4.62
+![ ](assets/soal_14(3).png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{W1r3d_Brut3_2aQWG3oeLYU15DFd0qWCCx0f0}
+![ ](assets/soal_14_hasil.png)
+
+15. Eiri menyusup ke ruang server dan memasang perangkat keyboard USB berbahaya pada node Alice. Buka file capture wired_usb_hid.pcap, identifikasi Vendor ID dan Product ID perangkat USB dari deskriptor USB, alamat nomor device USB, serta pesan rahasia yang berhasil dicuri dari
+keystroke. Validasi temuan kalian pada socket server: (link file) nc [IP_ Group] 3402
+
+- Vendor ID: 0x046d
+- Product ID: 0xc31c
+![ ](assets/soal_15(1).png)
+
+- Alamat nomor device: 7
+![ ](assets/soal_15(2).png)
+
+- Pesan rahasia yang berhasil dicuri: Wired_Protocol_7_is_alive_2026
+![ ](assets/soal_15(3).png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{USB_K3ystr0k3_i1I4t1YTpcsK5yFRnngZbtmkp}
+![ ](assets/soal_15_hasil.png)
+
+16. iri meletakkan file malware di server. Dari file capture wired_ftp_theft.pcap, lakukan analisis lalu lintas FTP mengidentifikasi alamat IP server FTP penyerang, banner software FTP
+yang digunakan, kredensial login penyerang, serta ukuran (size in bytes) dari file malware knights_payload.exe yang diunduh. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3403
+
+- Alamat IP server FTP penyerang: 198.51.100.7
+- Banner software FTP yang digunakan: vsftpd 3.0.5
+- Kredensial login penyerang: knights_agents: N4v1_s3cur3_2026
+- Ukuran (size in bytes) dari file malware knights_payload.exe yang diunduh: 524288
+
+17. Alice membuat halaman web di node-nya. Eiri memanfaatkan celah untuk mengunduh payload berbahaya ke sistem Alice. Analisis file capture wired_http_c2.pcap untuk mengidentifikasi nama domain (Host) tempat malware diunduh, alamat IP server penyerang, nama file executable malware yang diunduh, serta kode status HTTP yang dikembalikan. Validasi temuan kalian pada socket server:
+(link file) nc [IP_Group] 3404
+
+- Nama domain (Host) tempat malware diunduh: wired-update.net
+- Alamat IP server penyerang: 203.0.113.42
+- Nama file executable malware yang diunduh: navi_agent.exe
+- Kode status HTTP yang dikembalikan: 200
+
+18. Eiri mengubah taktik penyerangan dengan menanamkan file malware menggunakan protokol file sharing SMB. Analisis file capture wired_smb_transfer.pcapng untuk mengidentifikasi nama protokol jaringan yang dieksploitasi, IP pengirim dan penerima, folder tujuan penyimpanan malware pada sistem korban, serta nama file executable malware yang ditransfer. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3405
+
+- Nama protokol jaringan yang dieksploitasi:
+- IP pengirim dan penerima:
+- Folder tujuan penyimpanan malware pada sistem korban:
+- Nama file executable malware yang ditrasnfer:
+
+19. Eiri meneror jaringan dengan mengirimkan email pemerasan melalui protokol SMTP tanpa enkripsi. Analisis file capture wired_smtp_threat.pcap pada stream TCP terkait, identifikasi alamat email korban yang ditargetkan, password korban yang diklaim bocor oleh penyerang, jenis malware yang diinfeksikan, batas waktu (dalam hari) yang diberikan, serta MailClientID yang tercantum pada pesan. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3406
+
+- Alamat email korban yang ditargetkan:
+- Password korban yang diklaim bocor oleh penyerang:
+- Jenis malware yang diinfeksikan:
+- Batas waktu (dalam hari) yang diberikan: 
+- MailClientID yang tercantum pada pesan:
+
+20. Untuk rencana pamungkasnya, Eiri menyembunyikan komunikasi malware di balik saluran terenkripsi TLS. Namun Alice telah menyediakan file keylog untuk mendekripsi lalu lintas data tersebut. Analisis file capture wired_tls_decrypt.pcapng bersama keyslogfile.txt untuk mengidentifikasi versi protokol TLS yang dinegosiasikan, nama domain (SNI) yang diakses, alamat IP server HTTPS penyerang, User-Agent yang digunakan, serta HTTP request method dan path yang tersembunyi di dalam sesi dekripsi. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3407
+
+- Versi protokol TLS yang dinegosiasikan:
+- Nama domain (SNI) yang diakses:
+- Alamat IP server HTTPS penyerang:
+- User-Agent yang digunakan:
+- HTTP request method dan path yang tersembunyi di dalam sesi deskripsi: 
+
+
+
+
 
 
