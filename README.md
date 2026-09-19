@@ -592,7 +592,38 @@ Server kemudian akan mengirimkan balasan berupa echo dari karakter tersebut agar
 
 file pcap untuk soal ini dapat diakses melalui link berikut: [pcapng soal 11](artefacts/soal-11-wireshark.pcapng)
 
-12. asha
+12. Alice mencurigai Knights menjalankan beberapa layanan rahasia di node-nya. Lakukan pemindaian port dari node Alice ke node Knights menggunakan Netcat (nc) untuk memeriksa port 22 (SSH) dan 80 (HTTP) dalam keadaan terbuka, serta port rahasia 7777 dalam keadaan
+tertutup. Analisis di Wireshark perbedaan TCP Flag yang dikembalikan antara port terbuka (SYN-ACK) dengan port tertutup (RST-ACK).
+
+Pada root Knights, dijalankan dua perintah berikut untuk melakukan pengujian port. Netcat digunakan sebagai listener pada port 22 dan 80, sehingga kedua port tersebut berada dalam keadaan terbuka dan dapat digunakan sebagai target pemindaian dari node Alice.
+
+```sh
+nc -lkp 22 &
+nc -lkp 80 &
+```
+![ ](assets/nc_knights_soal12.png)
+
+Setelah listener pada port 22 dan 80 dijalankan pada node Knights, selanjutnya dilakukan pemindaian dari node Alice menggunakan Netcat dengan perintah:
+
+```sh
+nc -zv 10.79.3.2 22 80 7777
+```
+
+![ ](assets/nc_alice_soal12.png)
+
+Berdasarkan hasil pemindaian, koneksi ke port 22 dan port 80 berhasil dilakukan dengan status succeeded. Hal ini menunjukkan bahwa kedua port tersebut dalam keadaan terbuka karena terdapat listener yang berjalan pada node Knights. Sementara itu, koneksi ke port 7777 gagal dengan pesan Connection refused, yang menunjukkan bahwa port tersebut dalam keadaan tertutup karena tidak terdapat layanan yang sedang listening pada port tersebut.
+
+Setelah dilakukan pemindaian port dari Alice (10.79.1.2) menuju Knights (10.79.3.2), selanjutnya dilakukan pengamatan paket dengan Wirehark menggunakan filter:
+
+```sh
+tcp && ip.addr == 10.79.3.2
+```
+
+![ ](assets/wireshark_soal12_(1).png)
+![ ](assets/wireshark_soal12_(2).png)
+
+Berdasarkan hasil pemindaian dan analisis Wireshark, dapat disimpulkan bahwa terdapat perbedaan respons TCP antara port terbuka dan port tertutup. Port terbuka (22 dan 80) merespons SYN dengan SYN-ACK, sedangkan port tertutup (7777) merespons SYN dengan RST-ACK. Hal ini membuktikan bahwa Netcat dan Wireshark berhasil digunakan untuk mengidentifikasi kondisi port pada node Knights.
+
 
 13. Lain memerintahkan agar administrasi jarak jauh menggunakan SSH secara aman tanpa password. Install OpenSSH server pada node Knights, buat pasangan kunci SSH (ssh-keygen) pada node Mika untuk user mika_admin, dan konfigurasikan public key authentication (PasswordAuthentication no). 
 
@@ -723,13 +754,22 @@ Berikut adalah hasil keseluruhan dan mendapatkan flag :
 Congratulations! Here is your flag: KOMJAR26{USB_K3ystr0k3_i1I4t1YTpcsK5yFRnngZbtmkp}
 ![ ](assets/soal_15_hasil.png)
 
-16. iri meletakkan file malware di server. Dari file capture wired_ftp_theft.pcap, lakukan analisis lalu lintas FTP mengidentifikasi alamat IP server FTP penyerang, banner software FTP
+16. Eiri meletakkan file malware di server. Dari file capture wired_ftp_theft.pcap, lakukan analisis lalu lintas FTP mengidentifikasi alamat IP server FTP penyerang, banner software FTP
 yang digunakan, kredensial login penyerang, serta ukuran (size in bytes) dari file malware knights_payload.exe yang diunduh. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3403
 
 - Alamat IP server FTP penyerang: 198.51.100.7
+![ ](assets/soal_16(1).png)
+
 - Banner software FTP yang digunakan: vsftpd 3.0.5
+![ ](assets/soal_16(2).png)
+
 - Kredensial login penyerang: knights_agents: N4v1_s3cur3_2026
 - Ukuran (size in bytes) dari file malware knights_payload.exe yang diunduh: 524288
+![ ](assets/soal_16(3).png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{FTP_Th3ft_HqivbvABDh1g3HkfKVwBCgucE}
+![ ](assets/soal_16_hasil.png)
 
 17. Alice membuat halaman web di node-nya. Eiri memanfaatkan celah untuk mengunduh payload berbahaya ke sistem Alice. Analisis file capture wired_http_c2.pcap untuk mengidentifikasi nama domain (Host) tempat malware diunduh, alamat IP server penyerang, nama file executable malware yang diunduh, serta kode status HTTP yang dikembalikan. Validasi temuan kalian pada socket server:
 (link file) nc [IP_Group] 3404
@@ -738,29 +778,53 @@ yang digunakan, kredensial login penyerang, serta ukuran (size in bytes) dari fi
 - Alamat IP server penyerang: 203.0.113.42
 - Nama file executable malware yang diunduh: navi_agent.exe
 - Kode status HTTP yang dikembalikan: 200
+![ ](assets/soal_17.png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{Navi_C2_D0wnl04d_9c4GINEOZnauYvUkkwkYP2N6i}
+![ ](assets/soal_17_hasil.png)
 
 18. Eiri mengubah taktik penyerangan dengan menanamkan file malware menggunakan protokol file sharing SMB. Analisis file capture wired_smb_transfer.pcapng untuk mengidentifikasi nama protokol jaringan yang dieksploitasi, IP pengirim dan penerima, folder tujuan penyimpanan malware pada sistem korban, serta nama file executable malware yang ditransfer. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3405
 
-- Nama protokol jaringan yang dieksploitasi:
-- IP pengirim dan penerima:
-- Folder tujuan penyimpanan malware pada sistem korban:
-- Nama file executable malware yang ditrasnfer:
+- Nama protokol jaringan yang dieksploitasi: SMB2
+- IP pengirim: 10.7.3.100
+- IP penerima: 10.7.1.50
+- Folder tujuan penyimpanan malware pada sistem korban: ADMIN$
+- Nama file executable malware yang ditrasnfer: wired_trojan_payload.exe
+![ ](assets/soal_18.png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{SMB_Tr4nsf3r_Egiw498ZxJmkx98PdxuL3MQRl}
+![ ](assets/soal_18_hasil.png)
+
 
 19. Eiri meneror jaringan dengan mengirimkan email pemerasan melalui protokol SMTP tanpa enkripsi. Analisis file capture wired_smtp_threat.pcap pada stream TCP terkait, identifikasi alamat email korban yang ditargetkan, password korban yang diklaim bocor oleh penyerang, jenis malware yang diinfeksikan, batas waktu (dalam hari) yang diberikan, serta MailClientID yang tercantum pada pesan. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3406
 
-- Alamat email korban yang ditargetkan:
-- Password korban yang diklaim bocor oleh penyerang:
-- Jenis malware yang diinfeksikan:
-- Batas waktu (dalam hari) yang diberikan: 
-- MailClientID yang tercantum pada pesan:
+- Alamat email korban yang ditargetkan: victim@protocol7.co.jp
+- Password korban yang diklaim bocor oleh penyerang: pr0tocol_7_user
+- Jenis malware yang diinfeksikan: ransomware
+- Batas waktu (dalam hari) yang diberikan: 3
+- MailClientID yang tercantum pada pesan: 7719980706
+![ ](assets/soal_19.png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{SMTP_Ext0rt10n_p62uI53w6yvfiRPKslTM3jnFM}
+![ ](assets/soal_19_hasil.png)
 
 20. Untuk rencana pamungkasnya, Eiri menyembunyikan komunikasi malware di balik saluran terenkripsi TLS. Namun Alice telah menyediakan file keylog untuk mendekripsi lalu lintas data tersebut. Analisis file capture wired_tls_decrypt.pcapng bersama keyslogfile.txt untuk mengidentifikasi versi protokol TLS yang dinegosiasikan, nama domain (SNI) yang diakses, alamat IP server HTTPS penyerang, User-Agent yang digunakan, serta HTTP request method dan path yang tersembunyi di dalam sesi dekripsi. Validasi temuan kalian pada socket server: (link file) nc [IP_Group] 3407
 
-- Versi protokol TLS yang dinegosiasikan:
-- Nama domain (SNI) yang diakses:
-- Alamat IP server HTTPS penyerang:
-- User-Agent yang digunakan:
-- HTTP request method dan path yang tersembunyi di dalam sesi deskripsi: 
+- Versi protokol TLS yang dinegosiasikan: TLSv1.2
+- Nama domain (SNI) yang diakses: example.com
+- Alamat IP server HTTPS penyerang: 93.184.216.34
+![ ](assets/soal_20(1).png)
+
+- User-Agent yang digunakan: curl/7.62.0
+- HTTP request method dan path yang tersembunyi di dalam sesi deskripsi: HEAD /
+![ ](assets/soal_20(2).png)
+
+Berikut adalah hasil keseluruhan dan mendapatkan flag :
+Congratulations! Here is your flag: KOMJAR26{TLS_D3crypt_Ll1wJVXVn1IinwZhuOtQT4sSO}
+![ ](assets/soal_20_hasil.png)
 
 
 
